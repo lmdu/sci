@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+
+{% block title %} {{ j.title }} 影响因子 {% end %} - 雅知期刊查询
+
+{% block header %}
+<script src="{{ static_url("js/highcharts.js") }}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	new Highcharts.Chart({
+		chart: {
+			renderTo: 'hc-factor',
+			type: 'spline',
+		},
+		colors: ["#7cb5ec", "#90ed7d"],
+		title: {
+			text: "历年影响因子"
+		},
+		legend: {
+			enabled: true,
+			margin: 25
+		},
+		tooltip:{
+			crosshairs: {
+				width: 1,
+				color: '#ccc',
+				dashStyle: 'shortdot'
+			},
+		},
+		xAxis: {
+			categories: [{{ j.history.year }}],
+			labels:{y:25},
+			tickmarkPlacement: 'on'
+		},
+		yAxis: {
+			title: {
+				text: null
+			},
+			gridLineColor: "#ccc"
+		},
+		series:[{
+			name: '影响因子',
+			data: [{{ j.history.factor }}],
+		},
+		/*
+		{
+			name: '5年影响因子',
+			data: [{{ j.history.fiveFactor }}],
+		}*/
+		],
+		credits: {
+			enabled: false
+		}
+	});
+
+	new Highcharts.Chart({
+		chart: {
+			renderTo: 'hc-cite',
+			type: 'column',
+		},
+		colors: ["#90ed7d"], //["#434348"]
+		title: {
+			text: "历年文章引用次数"
+		},
+		legend: {
+			enabled: true,
+			margin: 25
+		},
+		tooltip:{
+			
+		},
+		xAxis: {
+			categories: [{{ j.history.year }}],
+			labels:{y:25},
+			tickmarkPlacement: 'on'
+		},
+		yAxis: {
+			title: {
+				text: null
+			},
+			gridLineColor: "#ccc"
+		},
+		series:[
+		{
+			name: '引用次数',
+			data: [{{ j.history.cites }}],
+		}
+		],
+		credits: {
+			enabled: false
+		}
+	});
+
+	new Highcharts.Chart({
+		chart: {
+			renderTo: 'hc-article',
+			type: 'column',
+		},
+		colors: ["#f7a35c"],
+		title: {
+			text: "历年文章数"
+		},
+		legend: {
+			enabled: true,
+			margin: 25
+		},
+		tooltip:{
+			
+		},
+		xAxis: {
+			categories: [{{ j.history.year }}],
+			labels:{y:25},
+			tickmarkPlacement: 'on'
+		},
+		yAxis: {
+			title: {
+				text: null
+			},
+			gridLineColor: "#ccc"
+		},
+		series:[{
+			name: '文章数',
+			data: [{{ j.history.articles }}],
+		}
+		],
+		credits: {
+			enabled: false
+		}
+	});
+});
+</script>
+<style type="text/css">
+.focus-button{
+	text-decoration: none;
+	font-size: 12px;
+	border: 1px solid #ddd;
+	background: #fff;
+	padding: 3px 5px;
+	border-radius: 3px;
+	margin-left: 5px;
+}
+.focus-info{
+	font-size: 13px;
+}
+#highchart-container{
+	width: 100%;
+}
+.comment-no-login{
+	text-align: center;
+	padding: 20px;
+	line-height: 30px;
+}
+
+</style>
+{% end %}
+
+{% block main %}
+
+<div class="units-row">
+	<div class="unit-100">
+		<table class="table-bordered width-100">
+			<tr>
+				<th colspan="2">
+					{{ j.title }}
+					<div class="right focus-info">
+						<span class="color-gray-light">{{ clickNum }} 次浏览</span>
+						{% if j.homepage %}
+						<a href="{{ j.homepage }}" class="focus-button">官网</a>
+						{% end %}
+						{% if j.guideLink %}
+						<a href="{{ j.guideLink }}" class="focus-button">投稿须知</a>
+						{% end %}
+						<a href="#comment" class="focus-button">投稿经验</a>
+					</div>
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<strong>JCR缩写</strong> <i>JCR abbreviation</i>
+				</td>
+				<td>{{ j.abbrev }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>ISO缩写</strong>
+					<i>ISO abbreviation</i>
+				</td>
+				<td>{{ j.isoAbbrev }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>出版号</strong>
+					<i>ISSN</i>
+				</td>
+				<td>{{ j.issn }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>出版周期</strong>
+					<i>Issues/Year</i>
+				</td>
+				<td>{{ j.issue }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>影响因子</strong>
+					<i>Impact factor</i>
+				</td>
+				<td><b>{{ j.factor }}</b></td>
+			</tr>
+			<tr>
+				<td>
+					<strong>5年影响因子</strong>
+					<i>5 year impact factor</i>
+				</td>
+				<td>{{ j.fiveFactor }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>半衰期</strong>
+					<i>Cited halflife</i>
+				</td>
+				<td>{{ j.halfLife }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>文章数</strong>
+					<i>Articles</i>
+				</td>
+				<td>{{ j.articles }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>引用次数</strong>
+					<i>Total cites</i>
+				</td>
+				<td>{{ j.cites }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>即年指数</strong>
+					<i>Immediacy index</i>
+				</td>
+				<td>{{ j.immediacyIndex }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>特征因子</strong>
+					<i>Eigenfactor score</i>
+				</td>
+				<td>{{ j.eigenFactor }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>文章影响分数</strong>
+					<i>Article influence score</i>
+				</td>
+				<td>{{ j.influenceScore }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>语言</strong>
+					<i>Language</i>
+				</td>
+				<td>
+					{{ j.language.tr }}
+					<i>{{ j.language.name }}</i>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>国家或地区</strong>
+					<i>Country/Territory</i>
+				</td>
+				<td>
+					{{ j.country.tr }}
+					<i>{{ j.country.name }}</i>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>出版商</strong>
+					<i>Publisher</i>
+				</td>
+				<td>{{ j.publisher.name }}</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>出版商地址</strong>
+					<i>Publisher address</i>
+				</td>
+				<td>{{ j.publisher.address }}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div class="units-row">
+	<table class="table-bordered width-100">
+		<tr>
+			<th colspan="3">学科分类及排名</th>
+		</tr>
+		<tr>
+			<td><strong>学科中文名</strong> <i>Subject Chinese</i></td>
+			<td><strong>学科英文名</strong> <i>Subject English</i></td>
+			<td><strong>排名</strong> <i>Ranking</i></td>
+		</tr>
+		{% for cat in j.category %}
+		<tr>
+			<td><a href="/category/{{ cat.sid }}">{{ cat.tr }}</a></td>
+			<td><a href="/category/{{ cat.sid }}">{{ cat.name }}</a></td>
+			<td>{{ cat.rank }}</td>
+		</tr>
+		{% end %}
+	</table>
+</div>
+
+<div class="units-row">
+	<table class="table-bordered width-100">
+		<tr>
+			<th>期刊历年相关数据</th>
+		</tr>
+		<tr>
+			<td id="hc-factor"></td>
+		</tr>
+		<tr>
+			<td id="hc-cite"></td>
+		</tr>
+		<tr>
+			<td id="hc-article"></td>
+		</tr>
+	</table>
+</div>
+
+<div class="units-row">
+	<table class="table-bordered width-100">
+		<tr>
+			<th colspan="2">用户提供的资料</th>
+		</tr>
+		<tr>
+			<td><strong>投稿接收比例</strong></td>
+			<td>{{ acceptRate }}%</td>
+		</tr>
+		<tr>
+			<td><strong>审稿速度</strong></td>
+			<td>平均 {{ monthAvg }} 个月</td>
+		</tr>
+
+	</table>
+</div>
+
+<div class="units-row">
+	<table class="table-bordered width-100" id="comment">
+		<tr>
+			<th>
+				投稿经验分享
+				<div class="right">
+					<span class="color-gray-light">已有 <strong>{{ commentNum }}</strong> 条分享</span>
+				</div>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{% if comments %}
+				{% for comment in comments %}
+				<div class="comment group">
+					<div class="avatar">
+						<img src="{{ static_url("upload/avatar/%s.png" % comment.uid) }}" onerror="this.src='{{ static_url("img/avatar.png") }}'">
+					</div>
+					<div class="content">
+						<div class="meta-top">
+							<a class="author">{{ comment.name }}</a>
+							<span class="time">{{ locale.format_date(comment.created) }}</span>
+						</div>
+						<div class="text">{{ comment.content }}</div>
+						{% set events= {0:"情况不详",1:"已投稿并接收",2:"已投稿但被拒",3:"已投稿但结果未知"} %}
+						<div class="meta-bottom text-right">
+							<span>审稿周期: 大约 {{ comment.review }} 个月</span>
+							<span>接收情况: {{ events[comment.submit] }}</span>
+							{% if comment.doi %}
+							<span>DOI: <a href="http://dx.doi.org/{{ comment.doi }}" target="_blank">{{ comment.doi }}</a></span>
+							{% end %}
+						</div>
+					</div>
+				</div>
+				{% end %}
+				{% else %}
+				<div class="comment-no-login">暂时还没有分享的投稿经验</div>
+				{% end %}
+			</td>
+		</tr>
+		<tr>
+			{% if current_user %}
+			<td>
+				<form class="forms" id="comment" method="post" action="/comment">
+					<ul class="forms-inline-list">
+						<li>
+							投稿接收情况: 
+							<select name="accept">
+								<option value="0">情况不详</option>
+								<option value="1">已投稿并接收</option>
+								<option value="2">已投稿但被拒</option>
+								<option value="3">已投稿但结果未知</option>
+							</select>
+						</li>
+						<li>
+							审稿速度: 
+							<select name="month">
+								{% for i in range(1, 13) %}
+								<option value="{{ i }}">{{ i }}</option>
+								{% end %}
+							</select>
+							个月内通知审稿结果
+						</li>
+						<li>已接收文章DOI:
+							<input type="text" name="doi">
+						</li>
+					</ul>
+
+					<label for="text">
+						投稿经验 <span class="req">*</span>
+						<textarea rows="4" id="content" name="content" class="width-100"></textarea>
+					</label>
+					<input type="hidden" name="jid" value="{{ j.jid }}">
+					<input type="hidden" name="next" value="{{ request.uri }}">
+					{% raw xsrf_form_html() %}
+					<p>
+						<button type="submit" class="btn btn-green">提交分享</button>
+						<i>(为了提供高质量的评论, 本站拒据垃圾评论, 所有评论将经过人工审核!)</i>
+					</p>
+				</form>
+			</td>
+			{% else %}
+			<td>
+				<div class="comment-no-login"><a href="/login?next={{ url_escape(request.uri) }}" class="btn btn-green">登录</a> 或 <a href="/register" class="btn">注册</a> 后分享投稿经验</div></td>
+			{% end %}
+		</tr>
+	</table>
+</div>
+
+{% end %}

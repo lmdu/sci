@@ -1,0 +1,300 @@
+*{
+	font-size: 14px;
+	font-family: "Microsoft Yahei";
+	color: #666;
+}
+
+a{
+	color: #8fb504;
+	text-decoration: none;
+}
+
+a:hover{
+
+}
+
+h1,h2,h3,h4{
+	font-family: "Microsoft Yahei";
+	font-weight: normal;
+	color: #8fb504;
+}
+
+h1.subheading,
+h2.subheading,
+h3.subheading,
+h4.subheading{
+	font-size: 14px;
+	color: #999;
+}
+
+h1{
+	font-size: 24px;
+}
+
+h2{
+	font-size:20px;
+}
+h2.header{
+	margin-bottom: 20px;
+}
+
+h3{
+	font-size: 18px;
+}
+
+h4{
+	font-size: 16px;
+}
+
+.wrap{
+	margin: auto;
+	width: 90%;
+	max-width: 970px;
+	padding-top:30px;
+}
+.relative{
+	position: relative;
+}
+
+/* header */
+.header-box{
+	border-bottom: 1px solid #eee;
+	margin-bottom: 50px;
+}
+
+.header-box .navbar a,
+.header-box .login{
+	line-height: 45px;
+}
+
+.header-box .login img{
+	vertical-align: middle;
+	display: inline-block;
+	border-radius: 50em;
+	border: 1px solid #ccc;
+	padding: 1px;
+	box-shadow: 0 0 3px #ccc;
+}
+
+/* search form */
+.search-box{
+	background: #f8f8f8;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.search-inner{
+	padding: 80px 0 30px 0;
+}
+
+.search-box .forms-desc{
+	font-size: 14px;
+}
+
+.statistics{
+	padding: 20px 0;
+}
+.statistics span{
+	color: #999;
+	margin-right: 10px;
+}
+
+.suggest-box{
+	position: absolute;
+	left: 0;
+	right:0px;
+	top: 35px;
+	opacity: .9;
+	background: #fff;
+	display: none;
+}
+.suggest-box .nav ul li a{
+	font-size: 13px;
+}
+.suggest-box sup{
+	color: green;
+	font-weight: bold;
+}
+
+/* index icons bar */
+.icon-intro{
+	margin-top: 50px;
+}
+.icon-data,
+.icon-search,
+.icon-update
+{
+	width: 55px;
+	height: 55px;
+}
+
+.icon-data{
+	background: url(../img/data.png) no-repeat;
+}
+.icon-update{
+	background: url(../img/update.png) no-repeat;
+}
+.icon-search{
+	background: url(../img/search.png) no-repeat;
+}
+
+.icon-desc{
+	font-size: 14px;
+	color: #999;
+	
+}
+
+.search-content{
+	margin-top: 50px;
+	font-size: 14px;
+}
+
+.footer-box{
+	margin-top: 50px;
+}
+
+.rank{
+	border: 1px solid #ccc;
+	padding: 2px 5px;
+	border-radius: 2px;
+	font-size: 12px;
+	margin-left: 20px;
+	box-shadow: 1px 1px 3px #eee;
+}
+
+/* most hot and impact joural */
+.hot-journal{
+	margin-top: 50px;
+}
+.hot-journal .nav ul li a,
+.impact-journal .nav ul li a{
+	font-size: 13px;
+}
+.hot-journal .nav ul li sup,
+.impact-journal .nav ul li sup{
+	color: #555;
+}
+
+/* address */
+.address{
+	font-size: 12px;
+}
+/* single journal page */
+
+/* comments */
+.comment{
+	margin: 10px;
+	border-bottom: 1px dotted #ccc;
+}
+.comment .avatar{
+	width: 6%;
+	float: left;
+}
+.comment .avatar img{
+	border-radius: 50em;
+	border:1px solid #ddd;
+	padding: 2px;
+}
+.comment a.author{
+	text-decoration: none;
+}
+.comment .content{
+	width: 92%;
+	float: right;
+}
+.comment .time{
+	margin-left: 10px;
+	color: #999;
+}
+.comment .content .text{
+	margin:10px 0;
+}
+.comment .meta-bottom{
+	padding-bottom: 10px;
+}
+.comment .meta-bottom span
+{
+	margin-left: 15px;
+	color: #999;
+}
+
+/* baidu app */
+.baidu-app{
+	width: 90%;
+	margin: auto;
+	min-width: 240px;
+	max-width: 800px;
+	padding: 10px;
+}
+.baidu-results{
+	padding: 10px;
+}
+
+/* table */
+table th{
+	background: #f9f9f9;
+	font-size: 15px;
+	color: #8fb504;
+	font-weight: bold;
+}
+table td i{
+	float: right;
+	color: #999;
+}
+/* form */
+ul.forms-inline-list li{
+	margin-right: 15px;
+}
+
+/* dynatable */
+.dynatable-search {
+  float: right;
+  margin-bottom: 10px;
+}
+.dynatable-pagination-links {
+  float: right;
+}
+
+.dynatable-record-count {
+  display: block;
+  padding: 5px 0;
+}
+
+.dynatable-pagination-links span,
+.dynatable-pagination-links li {
+  display: inline-block;
+}
+
+.dynatable-page-link,
+.dynatable-page-break {
+  display: block;
+  padding: 3px 8px;
+}
+
+.dynatable-page-link {
+  cursor: pointer;
+}
+
+.dynatable-active-page,
+.dynatable-disabled-page {
+  cursor: text;
+}
+.dynatable-active-page:hover,
+.dynatable-disabled-page:hover {
+  text-decoration: none;
+}
+
+.dynatable-active-page {
+  background: #000;
+  border-radius: 5px;
+  color: #fff;
+}
+.dynatable-active-page:hover {
+  color: #fff;
+}
+.dynatable-disabled-page,
+.dynatable-disabled-page:hover {
+  background: none;
+  color: #999;
+}

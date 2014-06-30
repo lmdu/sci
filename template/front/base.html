@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} 雅知期刊查询 - SCI杂志影响因子查询 {% end %}</title>
+
+	<meta charset="utf-8" />
+	<meta property="qc:admins" content="55743472116545716426375" />
+	<meta name="keywords" content="SCI,SCI期刊,期刊点评,投稿经验,SCI杂志,影响因子">
+	<meta name="description" content="雅知期刊查询帮助你查询SCI期刊或杂志的最新影响因子,期刊历年相关数据,并提供高质的投稿经验分享">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="{{ static_url("css/kube.css") }}" />
+	<link rel="stylesheet" type="text/css" href="{{ static_url("css/style.css") }}">
+	<script type="text/javascript" src="{{ static_url("js/jquery.js") }}"></script>
+	<script type="text/javascript" src="{{ static_url("js/happy.js") }}"></script>
+	<script type="text/javascript" src="{{ static_url("js/jquery.dynatable.js") }}"></script>
+	<script type="text/javascript" src="{{ static_url("js/factor.js") }}"></script>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "//hm.baidu.com/hm.js?181994c3b15b4b453f552633c26f9673";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	{% block header %}{% end %}
+</head>
+<body>
+<div class="wrap">
+	<div class="units-row header-box">
+		<div class="unit-25">
+			<a href="/"><img src="{{ static_url("img/logo.png") }}"></a>
+		</div>
+		<div class="unit-50">
+			<div class="navbar">
+				<ul>
+					<li>
+						<a href="/">首页</a>
+						<li><a href="/category">学科分类</a></li>
+						<li><a href="/country">国家分类</a></li>
+						<li><a href="/language">语言分类</a></li>
+						<li><a href="/publisher">出版社</a></li>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="unit-25">
+			{% if current_user %}
+			<div class="login right">
+				<img src="{{ static_url("upload/avatar/%s.png" % current_user.uid) }}" width="32" height="32" onerror="this.src='{{ static_url("img/avatar.png") }}'">
+				{{ current_user.name }}
+				<a href="/logout?next={{ url_escape(request.uri) }}">退出</a>
+			</div>
+			{% else %}
+			<div class="right">
+				<a href="/login"><img src="{{ static_url("img/qq.png") }}"></a>
+			</div>
+			{% end %}
+		</div>
+	</div>
+
+	{% block main %}{% end %}
+
+	<div class="units-row footer-box">
+		<div class="unit-50">
+			&copy;2014 雅知期刊查询 <a href="http://www.mencent.com">明盛创想</a>旗下网站 蜀ICP备14007715号-3
+		</div>
+		<div class="unit-50">
+			<div class="navbar navbar-right">
+				<ul>
+					<li><a href="/page/about">关于我们</a></li>
+					<li><a href="/page/contact">联系我们</a></li>
+					<!--<li><a href="/page/fadeback">意见反馈</a></li>-->
+					<li><a href="http://thomsonreuters.com/journal-citation-reports/" target="_blank">JCR系统</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

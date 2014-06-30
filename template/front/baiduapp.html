@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ _("雅知期刊查询") }} - {{ _("SCI杂志影响因子查询") }}</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/static/css/kube.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/baidu.js"></script>
+    <script type="text/javascript" name="baidu-tc-cerfication" src="http://apps.bdimg.com/cloudaapi/lightapp.js#31632e06cdd7ea49f40ed91495ea28bb"></script><script type="text/javascript">window.bd && bd._qdc && bd._qdc.init({app_id: 'c15439a1e9cb25fb4874d0e3'});</script>
+</head>
+<body>
+<div class="baidu-app">
+<h2>SCI期刊影响因子查询</h2>
+<div class="units-row">
+	<div class="unit-centered unit-100">
+		<form method="post" action="/baidu" class="forms relative">
+			<label class="input-groups">
+				<input type="text" name="s" placeholder="{{ _("Nature") }}">
+				<span class="btn-append">
+					<input type="submit" class="btn btn-black" value="{{ _("开始查询") }}">
+				</span>
+			</label>
+			<div class="suggest-box">
+				<div class="nav nav-stacked">
+					<ul></ul>
+				</div>
+			</div>
+			<div class="forms-desc">{{ _("请输入SCI杂志名称, 缩写名, 或者ISSN号") }}</div>
+		</form>
+	</div>
+</div>
+<div class="units-row">
+	<div class="unit-100 baidu-results"></div>
+</div>
+</div>
+</body>
+</html>

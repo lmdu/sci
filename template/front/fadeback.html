@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} 意见反馈 - 雅知期刊查询 {% end %}
+
+{% block main %}
+<div class="units-row">
+	<div class="unit-30">
+		<div class="nav nav-stacked">
+			<ul>
+				<li><a href="/page/about">关于我们</a></li>
+				<li><a href="/page/contact">联系我们</a></li>
+				<li class="active"><a>意见反馈</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="unit-70">
+		<p>如果你在使用 雅知期刊查询 时遇到什么问题, 可以在这里留言, 我们会及时修复BUG<br>
+		如果你有什么意见或好的建议, 也可能通过在这里给我留言, 我们会参考采纳<br>
+		感谢你对 雅知期刊查询 的支持</p>
+
+		<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="文章在原站点中的ID" data-title="文章标题" data-url="文章网址"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"sci"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+	</div>
+</div>
+{% end %}

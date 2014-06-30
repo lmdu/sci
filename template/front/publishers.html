@@ -1,0 +1,26 @@
+{% extends base.html %}
+
+{% block title %}
+出版社 - 雅知期刊查询
+{% end %}
+
+{% block main %}
+<div class="units-row">
+	<div class="unit-100">
+		<table id="publishers-table" class="table-bordered width-100">
+			<thead>
+				<th>出版社名称及地址</th><th>期刊数</th>
+			</thead>
+			{% for i,publisher in enumerate(publishers) %}
+			<tr>
+				<td class="">
+					<a href="/publisher/{{ publisher.pid }}">{{ publisher.name }}</a><br>
+					<span class="address">{{ publisher.address }}</span>
+				</td>
+				<td class="">{{ publisher.count }}</td>
+			</tr>
+			{% end %}
+		</table>
+	</div>
+</div>
+{% end %}

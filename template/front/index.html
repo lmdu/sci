@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block header %}
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.search-box input[name="s"]').on('input', function(){
+		$('.suggest-box').hide();
+		var s = $.trim($(this).val());
+		if(s == ''){
+			return;
+		}else{
+			s = $(this).val();
+		}
+		var xsrf = $('.search-box input[name="_xsrf"]').val();
+		$.post("/",{s:s,_xsrf:xsrf},function(data){
+			data = $.trim(data);
+			
+			if(data != ''){
+				$('.suggest-box .nav ul').html(data)
+				$('.suggest-box').show();
+			}else{
+				$('.suggest-box').hide();
+			}
+			
+		});
+	});
+});
+</script>
+{% end %}
+
+{% block main %}
+<div class="units-row search-box">
+	<div class="unit-centered unit-70  search-inner">
+		<form method="post" action="/search" class="forms relative">
+			<label class="input-groups">
+				<input type="text" name="s" placeholder="例如: Nature">
+				<span class="btn-append">
+					<input type="submit" class="btn btn-black" value="Go!">
+				</span>
+			</label>
+			<div class="suggest-box">
+				<div class="nav nav-stacked nav-stats">
+					<ul></ul>
+				</div>
+			</div>
+			<div class="forms-desc">请输入SCI杂志名称, 缩写名, 或者ISSN号</div>
+			{% raw xsrf_form_html() %}
+		</form>
+	</div>
+
+	<div class="unit-centered unit-100 text-centered">
+		<div class="statistics">
+			<span><strong>{{ journalNum }}</strong> 个期刊</span>
+			<span><strong>{{ subjectNum }}</strong> 个分类</span>
+			<span><strong>{{ countryNum }}</strong> 个国家</span>
+			<span><strong>{{ languageNum }}</strong> 种语言</span>
+			<span>已帮助 <strong>{{ views }}</strong> 次查询</span>
+			<span>最近更新时间 <kbd>2014-3-28</kbd></span>
+		</div>
+	</div>
+	
+</div>
+
+<div class="units-row icon-intro">
+	<div class="unit-33">
+		<div class="icon-data left width-25"></div>
+		<div class="icon-desc right width-75">
+			{{ _("本站所有数据均来源于全球领先的商务和专业智能信息提供商汤森路透知识产权与科技部发布的期刊引用报告") }}(Journal Citation Reports&reg;, JCR)
+		</div>
+	</div>
+	<div class="unit-33">
+		<div class="icon-search left width-25"></div>
+		<div class="icon-desc right width-75">
+			{{ _("快速查询SCI期刊年度影响因子, 精准到达查询结果, 影响因子快速预览, 除了能查询期刊影响因子外, 还能查询期刊详细信息及历年影响因子") }}
+		</div>
+	</div>
+	<div class="unit-33">
+		<div class="icon-update left width-25"></div>
+		<div class="icon-desc right width-75">
+			{{ _("本站所有数据同步JCR系统数据更新, JCR一发布新的年度期刊影响因子, 我们将及时更新系统中的数据, 方便大家获取最新的期刊影响因子") }}</div>
+	</div>
+</div>
+
+<div class="units-row hot-journal">
+	<div class="unit-50">
+		<h3>最热门期刊</h3>
+		<h3 class="subheading">查询次数最多的期刊</h3>
+		<div class="nav nav-stroked nav-stats">
+			<ul>
+				{% for hot in hots %}
+				<li><a href="/journal/{{ hot.jid }}">{{ hot.title }}</a><sup>{{ hot.views }}</sup></li>
+				{% end %}
+			</ul>
+		</div>
+	</div>
+	<div class="unit-50 impact-journal">
+		<h3>最具影响力期刊</h3>
+		<h3 class="subheading">年度影响因子最高的期刊</h3>
+		<div class="nav nav-stroked nav-stats">
+			<ul>
+				{% for most in mosts %}
+				<li><a href="/journal/{{ most.jid }}">{{ most.title }}</a><sup>{{ most.factor }}</sup></li>
+				{% end %}
+			</ul>
+		</div>
+	</div>
+</div>
+
+{% end %}

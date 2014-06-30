@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ title }} - 雅知期刊查询
+{% end %}
+
+{% block main %}
+<div class="units-row">
+	<div class="unit-100">
+		<table id="category-table" class="table-bordered width-100">
+			<thead>
+				<tr>
+					<th class="width-60">期刊全称</th>
+					<th class="width-20">名称缩写</th>
+					<th class="width-10">ISSN</th>
+					<th class="width-10">影响因子</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for mag in mags %}
+				<tr>
+					<td><a href="/journal/{{ mag.jid }}">{% raw mag.title %}</a></td>
+					<td>{% raw mag.abbrev %}</td>
+					<td>{% raw mag.issn %}</td>
+					<td>{{ mag.factor }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% end %}

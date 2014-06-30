@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="units-row">
+	<div class="unit-centered unit-33">
+		<form method="post" action="/login" id="login" class="forms">
+			<label>
+				邮箱
+				<input type="email" id="email" name="email" class="width-100">
+			</label>
+			<label>
+				密码
+				<input type="password" id="password" name="password" class="width-100">
+			</label>
+			{% if msg %}
+			<p class="error">{{ msg }}</p>
+			{% end %}
+			<p><button type="submit" class="btn btn-green">登录</button> <a href="#" class="btn">忘记密码</a></p>
+			<p>还没有帐号? <a href="/register">立即注册</a></p>
+			<input type="hidden" name="next" value="{{ next }}">
+			{% raw xsrf_form_html() %}
+		</form>
+	</div>
+
+</div>
+
+{% end %}

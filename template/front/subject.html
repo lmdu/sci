@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ cat.translate }} - {{ cat.name }} - 雅知期刊查询
+{% end %}
+
+{% block main %}
+<div class="units-row">
+	<div class="unit-100">
+		<table class="table-bordered width-100">
+			<thead>
+				<tr>
+					<th colspan="4">{{ cat.name }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<strong>中文名称</strong>
+						<i>Chinese</i>
+					</td>
+					<td>{{ cat.translate }}</td>
+					<td>
+						<strong>引用总数</strong>
+						<i>Total cites</i>
+					</td>
+					<td>{{ cat.cites }}</td>
+				</tr>
+				<tr>
+					<td>
+						<strong>平均影响因子</strong>
+						<i>Median impact factor</i>
+					</td>
+					<td>{{ cat.medianFactor }}</td>
+					<td>
+						<strong>集合影响因子</strong>
+						<i>Aggregate impact factor</i>
+					</td>
+					<td>{{ cat.aggregateFactor }}</td>
+				</tr>
+				<tr>
+					<td>
+						<strong>集合即年指数</strong>
+						<i>Aggregate immediacy index</i>
+					</td>
+					<td>{{ cat.immediacyIndex }}</td>
+					<td>
+						<strong>集合半衰期</strong>
+						<i>Aggregate cited halflife</i>
+					</td>
+					<td>{{ cat.halfLife }}</td>
+				</tr>
+				<tr>
+					<td>
+						<strong>期刊数</strong>
+						<i>Journals</i>
+					</td>
+					<td>{{ cat.count }}</td>
+					<td>
+						<strong>文章数</strong>
+						<i>Articles</i>
+					</td>
+					<td>{{ cat.articles }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="unit-100">
+		<table id="category-table" class="table-bordered width-100">
+			<thead>
+				<tr>
+					<th class="width-60">期刊全称</th>
+					<th class="width-20">名称缩写</th>
+					<th class="width-10">ISSN</th>
+					<th class="width-10">影响因子</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for mag in mags %}
+				<tr>
+					<td><a href="/journal/{{ mag.jid }}">{% raw mag.title %}</a></td>
+					<td>{% raw mag.abbrev %}</td>
+					<td>{% raw mag.issn %}</td>
+					<td>{{ mag.factor }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% end %}

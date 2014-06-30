@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+学科分类 - 雅知期刊查询
+{% end %}
+
+{% block main %}
+<div class="units-row">
+	<div class="unit-100">
+	<table id="categories-table" class="table-bordered width-100">
+		<thead>
+			<tr>
+				<th>学科英文名</th>
+				<th>学科中文名</th>
+				<th>平均影响因子</th>
+				<th>即年指数</th>
+				<th>期刊总数</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for cat in cats %}
+			<tr>
+				<td><a href="/category/{{ cat.sid }}">{{ cat.name }}</a></td>
+				<td><a href="/category/{{ cat.sid }}">{{ cat.translate }}</a></td>
+				<td>{{ cat.medianFactor }}</td>
+				<td>{{ cat.immediacyIndex }}</td>
+				<td>{{ cat.count }}</td>
+			</tr>
+		{% end %}
+		</tbody>
+	</table>
+</div>
+</div>
+
+{% end %}

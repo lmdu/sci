@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<script type="text/javascript" src="{{ static_url("js/jquery.js") }}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.input').on('input', function(){
+		$('.popup').hide();
+		var s = $.trim($(this).val());
+		if(s == ''){
+			return;
+		}else{
+			s = $(this).val();
+		}
+		$.post("/qq",{s:s},function(data){
+			data = $.trim(data);
+			if(data != ''){
+				$('.popup').html(data);
+				$('.popup').show();
+			}else{
+				$('.popup').hide();
+			}
+			
+		});
+	});
+});
+</script>
+<style type="text/css">
+*{
+	padding: 0;
+	margin:0 ;
+	font-size: 14px;
+	font-family: "Microsoft YaHei";
+}
+.main{
+	margin: 0 auto;
+	min-width: 760px;
+	max-width: 950px;
+	width: 100%;
+}
+.input-box{
+	border: 1px solid #ddd;
+	background: #f9f9f9;
+	border-radius: 10px;
+}
+.input{
+	width: 90%;
+	font-size: 16px;
+	border: 1px solid #bbb;
+	background: #fff;
+	border-radius: 5px;
+	outline: none;
+	padding: 10px;
+}
+.input-box p{
+	margin: 50px 0;
+	text-align: center;
+}
+.input-box i{
+	font-size: 14px;
+	color: #999;
+}
+table{
+	border-collapse: collapse;
+	width: 90%;
+	margin: 0 auto;
+	background: #fff;
+	padding: 10px;
+}
+table td, th{
+	border: 1px solid #ddd;
+	line-height: 24px;
+	padding: 10px;
+}
+table td i{
+	float: right;
+}
+table th{
+	background: #eee;
+	color: #8fb504;
+	text-align: left;
+}
+.relative{
+	position: relative;
+	text-align: center;
+}
+.popup{
+	position: absolute;
+	top: 45px;
+	left: 5%;
+	right: 5%;
+	border: 1px solid #ddd;
+	border-bottom: none;
+	background: #fff;
+	list-style: none;
+	opacity: .95;
+	display: none;
+}
+.popup li{
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	padding: 8px 10px;
+}
+.popup li a{
+	color: #8fb504;
+	text-decoration: none;
+}
+.popup li a:hover{
+	text-decoration: underline;
+}
+.popup li strong{
+	float: right;
+}
+.detail{
+	float: right;
+	text-decoration: none;
+	background: #fff;
+	padding: 0px 10px;
+	color: #8fb504;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+}
+
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="input-box">
+		<p><a href="/"><img src="{{ static_url("img/logo.png") }}"></a></p>
+		<p>
+			<div class="relative">
+				<input type="text" name="journal" class="input" placeholder="输入SCI期刊名称, 缩写名, 或者ISSN号, 例如: Nature">
+				<ul class="popup"></ul>
+			</div>
+		</p>
+		<p>
+			<table>
+				<thead>
+					<tr>
+						<th colspan="2">
+							{{ j.title }}
+							<a href="/journal/{{ j.jid }}" target="_blank" class="detail">查看详细内容</a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><strong>缩写</strong><i>Abbreviation</i></td>
+						<td>{{ j.abbrev }}</td>
+					</tr>
+					<tr>
+						<td><strong>出版号</strong><i>ISSN</i></td>
+						<td>{{ j.issn }}</td>
+					</tr>
+					<tr>
+						<td><strong>出版周期</strong><i>Issues/Year</i></td>
+						<td>{{ j.issue }}</td>
+					</tr>
+					<tr>
+						<td><strong>影响因子</strong><i>Impact factor</i></td>
+						<td>{{ j.factor }}</td>
+					</tr>
+					<tr>
+						<td><strong>5年影响因子</strong><i>5 year impact factor</i></td>
+						<td>{{ j.fiveFactor }}</td>
+					</tr>
+					<tr>
+						<td><strong>半衰期</strong><i>Cited halflife</i></td>
+						<td>{{ j.halfLife }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</p>
+	</div>
+</div>
+</body>
+</html>

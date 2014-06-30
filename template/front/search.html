@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+搜索 {{ term }} 的结果 - 雅知期刊查询
+{% end %}
+
+{% block main %}
+<div class="units-row search-content">
+	<!--<h2 class="header">搜索 <strong>{{ term }}</strong> 的结果</h2>-->
+	<div class="unit-100">
+		<table id="search-table" class="table-bordered width-100">
+			<thead>
+				<tr>
+					<th class="width-50">期刊全称</th>
+					<th class="width-30">名称缩写</th>
+					<th class="width-10">ISSN</th>
+					<th class="width-10">影响因子</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			{% if mags is None %}
+				<tr><td class="text-centered" colspan="4">{{ _("未搜索到相关记录") }}</td> </tr>
+			{% else %}
+				{% for mag in mags %}
+				<tr>
+					<td><a href="/journal/{{ mag.jid }}">{% raw mag.title %}</a></td>
+					<td>{% raw mag.abbrev %}</td>
+					<td>{% raw mag.issn %}</td>
+					<td>{{ mag.factor }}</td>
+				</tr>
+				{% end %}
+			{% end %}
+			</tbody>
+		</table>
+	</div>
+	<div class="unit-100">
+		<ul class="pagination"></ul>
+	</div>
+</div>
+
+{% end %}

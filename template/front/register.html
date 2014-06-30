@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="units-row">
+	<div class="unit-centered unit-33">
+		<form method="post" action="/register" id="register" class="forms">
+			<label>
+				邮箱<input type="email" id="email" name="email" class="width-100">
+			</label>
+			<label>
+				用户名<input type="text" id="name" name="name" class="width-100">
+				<div class="forms-desc">至少4个数字、字母或下划线</div>
+			</label>
+			<label>
+				密码<input type="password" id="password" name="password" class="width-100">
+				<div class="forms-desc">至少6个字母或数字</div>
+			</label>
+			{% if msg %}
+			<p class="error">{{ msg }}</p>
+			{% end %}
+			<p><button type="submit" class="btn btn-green">注册</button></p>
+			<p>已有帐号? <a href="/login">立即登录</a></p>
+			{% raw xsrf_form_html() %}
+		</form>
+	</div>
+</div>
+
+{% end %}
