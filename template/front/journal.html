@@ -169,7 +169,6 @@ $(document).ready(function(){
 						{% if j.guideLink %}
 						<a href="{{ j.guideLink }}" class="focus-button">投稿须知</a>
 						{% end %}
-						<a href="#comment" class="focus-button">投稿经验</a>
 					</div>
 				</th>
 			</tr>
@@ -332,109 +331,22 @@ $(document).ready(function(){
 </div>
 
 <div class="units-row">
-	<table class="table-bordered width-100">
-		<tr>
-			<th colspan="2">用户提供的资料</th>
-		</tr>
-		<tr>
-			<td><strong>投稿接收比例</strong></td>
-			<td>{{ acceptRate }}%</td>
-		</tr>
-		<tr>
-			<td><strong>审稿速度</strong></td>
-			<td>平均 {{ monthAvg }} 个月</td>
-		</tr>
-
-	</table>
-</div>
-
-<div class="units-row">
-	<table class="table-bordered width-100" id="comment">
-		<tr>
-			<th>
-				投稿经验分享
-				<div class="right">
-					<span class="color-gray-light">已有 <strong>{{ commentNum }}</strong> 条分享</span>
-				</div>
-			</th>
-		</tr>
-		<tr>
-			<td>
-				{% if comments %}
-				{% for comment in comments %}
-				<div class="comment group">
-					<div class="avatar">
-						<img src="{{ static_url("upload/avatar/%s.png" % comment.uid) }}" onerror="this.src='{{ static_url("img/avatar.png") }}'">
-					</div>
-					<div class="content">
-						<div class="meta-top">
-							<a class="author">{{ comment.name }}</a>
-							<span class="time">{{ locale.format_date(comment.created) }}</span>
-						</div>
-						<div class="text">{{ comment.content }}</div>
-						{% set events= {0:"情况不详",1:"已投稿并接收",2:"已投稿但被拒",3:"已投稿但结果未知"} %}
-						<div class="meta-bottom text-right">
-							<span>审稿周期: 大约 {{ comment.review }} 个月</span>
-							<span>接收情况: {{ events[comment.submit] }}</span>
-							{% if comment.doi %}
-							<span>DOI: <a href="http://dx.doi.org/{{ comment.doi }}" target="_blank">{{ comment.doi }}</a></span>
-							{% end %}
-						</div>
-					</div>
-				</div>
-				{% end %}
-				{% else %}
-				<div class="comment-no-login">暂时还没有分享的投稿经验</div>
-				{% end %}
-			</td>
-		</tr>
-		<tr>
-			{% if current_user %}
-			<td>
-				<form class="forms" id="comment" method="post" action="/comment">
-					<ul class="forms-inline-list">
-						<li>
-							投稿接收情况: 
-							<select name="accept">
-								<option value="0">情况不详</option>
-								<option value="1">已投稿并接收</option>
-								<option value="2">已投稿但被拒</option>
-								<option value="3">已投稿但结果未知</option>
-							</select>
-						</li>
-						<li>
-							审稿速度: 
-							<select name="month">
-								{% for i in range(1, 13) %}
-								<option value="{{ i }}">{{ i }}</option>
-								{% end %}
-							</select>
-							个月内通知审稿结果
-						</li>
-						<li>已接收文章DOI:
-							<input type="text" name="doi">
-						</li>
-					</ul>
-
-					<label for="text">
-						投稿经验 <span class="req">*</span>
-						<textarea rows="4" id="content" name="content" class="width-100"></textarea>
-					</label>
-					<input type="hidden" name="jid" value="{{ j.jid }}">
-					<input type="hidden" name="next" value="{{ request.uri }}">
-					{% raw xsrf_form_html() %}
-					<p>
-						<button type="submit" class="btn btn-green">提交分享</button>
-						<i>(为了提供高质量的评论, 本站拒据垃圾评论, 所有评论将经过人工审核!)</i>
-					</p>
-				</form>
-			</td>
-			{% else %}
-			<td>
-				<div class="comment-no-login"><a href="/login?next={{ url_escape(request.uri) }}" class="btn btn-green">登录</a> 或 <a href="/register" class="btn">注册</a> 后分享投稿经验</div></td>
-			{% end %}
-		</tr>
-	</table>
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="{{ j.jid }}" data-title="{{ j.title }}" data-url="/journal/{{ j.jid }}"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"sci"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 </div>
 
 {% end %}

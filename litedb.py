@@ -1,12 +1,10 @@
 #!/usr/bin/evn python
 #-*- coding: utf-8 -*-
 
-#try:
-#	from pysqlite2 import dbapi2 as sqlite3
-#except ImportError:
-#	import sqlite3
-import sqlite3
-import struct
+try:
+	import sqlite3
+except ImportError:
+	from pysqlite2 import dbapi2 as sqlite3
 
 class Row(dict):
 	def __getattr__(self, name):

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
+<title>{{ j.title }}</title>
 <script type="text/javascript" src="{{ static_url("js/jquery.js") }}"></script>
+<script src="{{ static_url("js/highcharts.js") }}"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.input').on('input', function(){
@@ -24,6 +25,47 @@ $(document).ready(function(){
 			
 		});
 	});
+
+	new Highcharts.Chart({
+		chart: {
+			renderTo: 'factors',
+			type: 'spline',
+		},
+		colors: ["#7cb5ec", "#90ed7d"],
+		title: {
+			text: "历年影响因子"
+		},
+		legend: {
+			enabled: true,
+			margin: 25
+		},
+		tooltip:{
+			crosshairs: {
+				width: 1,
+				color: '#ccc',
+				dashStyle: 'shortdot'
+			},
+		},
+		xAxis: {
+			categories: [{{ j.years }}],
+			labels:{y:25},
+			tickmarkPlacement: 'on'
+		},
+		yAxis: {
+			title: {
+				text: null
+			},
+			gridLineColor: "#ccc"
+		},
+		series:[{
+			name: '影响因子',
+			data: [{{ j.factors }}],
+		}],
+		credits: {
+			enabled: false
+		}
+	});
+
 });
 </script>
 <style type="text/css">
@@ -45,7 +87,7 @@ $(document).ready(function(){
 	border-radius: 10px;
 }
 .input{
-	width: 90%;
+	width: 88%;
 	font-size: 16px;
 	border: 1px solid #bbb;
 	background: #fff;
@@ -121,13 +163,16 @@ table th{
 	border-radius: 3px;
 	border: 1px solid #ddd;
 }
-
+#factors{
+	width: 90%;
+	margin: 0 auto;
+}
 </style>
 </head>
 <body>
 <div class="main">
 	<div class="input-box">
-		<p><a href="/"><img src="{{ static_url("img/logo.png") }}"></a></p>
+		<p><img src="{{ static_url("img/logo.png") }}"></p>
 		<p>
 			<div class="relative">
 				<input type="text" name="journal" class="input" placeholder="输入SCI期刊名称, 缩写名, 或者ISSN号, 例如: Nature">
@@ -140,7 +185,6 @@ table th{
 					<tr>
 						<th colspan="2">
 							{{ j.title }}
-							<a href="/journal/{{ j.jid }}" target="_blank" class="detail">查看详细内容</a>
 						</th>
 					</tr>
 				</thead>
@@ -172,6 +216,7 @@ table th{
 				</tbody>
 			</table>
 		</p>
+		<p><div id="factors"></div></p>
 	</div>
 </div>
 </body>

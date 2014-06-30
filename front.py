@@ -127,7 +127,7 @@ class MainHandler(BaseHandler):
 		)
 		content = ""
 		for r in self.db.query(sql, term):
-			content += '<li><a href="/journal/%s">%s</a><strong>%s</strong></li>' \
+			content += '<li><a href="/journal/%s">%s</a><sup><strong>%s</strong><sup></li>' \
 				% (r.docid, r.target, r.factor)
 		self.write(content)
 
@@ -404,6 +404,18 @@ class QQHandler(BaseHandler):
 			)
 
 		journal = self.db.get(sql)
+
+		#get history data
+		sql = (
+			"SELECT year,factor FROM history"
+			" WHERE jid=? ORDER BY year"
+		)
+		res = self.db.query(sql, journal.jid)
+		print res
+		journal.years = ",".join([str(row.year) for row in res])
+		journal.factors = ",".join([str(row.factor) for row in res])
+		print journal.years
+		print journal.factors
 		self.render("qq-index.html", j=journal)
 
 	def post(self):
